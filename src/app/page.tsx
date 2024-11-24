@@ -1,3 +1,10 @@
-export default function Home() {
-   return <div className="h-screen w-screen bg-blue-50/50">hello world</div>;
+import { auth } from '@/lib/auth';
+
+export default async function Page() {
+   const session = await auth();
+   return (
+      <div className="flex h-screen items-center justify-center">
+         Welcome {JSON.stringify(session)}
+      </div>
+   );
 }
