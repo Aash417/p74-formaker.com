@@ -6,9 +6,9 @@ import { Hono } from 'hono';
 import { FormSchema } from './schemas';
 
 export const formRoute = new Hono()
-   .post('/', sessionMiddleware, zValidator('form', FormSchema), async (c) => {
+   .post('/', sessionMiddleware, zValidator('json', FormSchema), async (c) => {
       const userId = c.get('userId');
-      const { title, description, fields } = c.req.valid('form');
+      const { title, description, fields } = c.req.valid('json');
 
       const result = await db.form.create({
          data: {
