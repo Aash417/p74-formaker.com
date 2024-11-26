@@ -33,6 +33,18 @@ export const formRoute = new Hono()
          data: result.id,
       });
    })
+   .get('/', sessionMiddleware, async (c) => {
+      const userId = c.get('userId');
+      const result = await db.form.findMany({
+         where: {
+            creatorId: userId,
+         },
+      });
+
+      return c.json({
+         data: result,
+      });
+   })
    .get('/:formId', sessionMiddleware, async (c) => {
       const { formId } = c.req.param();
 

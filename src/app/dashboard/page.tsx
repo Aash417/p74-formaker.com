@@ -1,12 +1,21 @@
-import React from 'react';
+'use client';
 
-import { Button } from '@/components/ui/button';
-import { auth, signOut } from '@/lib/auth';
-import { HiOutlineDocumentAdd } from 'react-icons/hi';
+import { useGetForms } from '@/features/forms/api/use-get-forms';
 import Link from 'next/link';
+import { HiOutlineDocumentAdd } from 'react-icons/hi';
 
-export default async function Page() {
-   const session = await auth();
+export default function Page() {
+   const { data, isLoading } = useGetForms();
+
+   if (isLoading)
+      return (
+         <div className="flex items-center">
+            Create form
+            <Link href="/form">
+               <HiOutlineDocumentAdd size={50} />
+            </Link>
+         </div>
+      );
 
    return (
       <div>
@@ -17,7 +26,20 @@ export default async function Page() {
             </Link>
          </div>
 
-         <div>Your forms</div>
+         <div>
+            Your forms
+            <div>
+               {data?.map((el) => {
+                  return (
+                     <div key={el.id}>
+                        <Link href={`/form/${el.id}`}>
+                           {el.title} : {el.id}
+                        </Link>
+                     </div>
+                  );
+               })}
+            </div>
+         </div>
       </div>
    );
 }
