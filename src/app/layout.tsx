@@ -1,9 +1,10 @@
+import Navbar from '@/components/navbar';
 import Providers from '@/components/query-provider';
+import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import './globals.css';
-import Navbar from '@/components/navbar';
-import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = localFont({
    src: './fonts/GeistVF.woff',
@@ -34,7 +35,7 @@ export default function RootLayout({
             <Toaster />
             <Providers>
                <Navbar />
-               {children}
+               <NuqsAdapter>{children}</NuqsAdapter>
             </Providers>
          </body>
       </html>
