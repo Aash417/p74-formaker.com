@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from './ui/button';
+import UserButton from './user-button';
 
 export default function Navbar() {
    return (
-      <div className="sticky flex items-center justify-between border-b p-4 pl-5 pr-5">
+      <div className="flex items-center justify-between border-b p-2 pl-5 pr-5">
          <div className="relative flex flex-row items-center gap-1 text-lg font-semibold">
             <Link href="/dashboard">
                <Image
@@ -16,9 +16,8 @@ export default function Navbar() {
                />
             </Link>
          </div>
-         <Button variant="outline" size="sm" asChild>
-            <Link href="/auth/sign-in">Get started</Link>
-         </Button>
+
+         <UserButton />
       </div>
    );
 }

@@ -47,9 +47,11 @@ export default function DataForm({ formData }: any) {
                               .slice(1, -1)
                               .split(',')
                               .map((option: string, idx: number) => (
-                                 <div className="flex items-center space-x-2">
+                                 <div
+                                    className="flex items-center space-x-2"
+                                    key={idx + 1}
+                                 >
                                     <RadioGroupItem
-                                       key={idx}
                                        value={option.trim()}
                                        disabled
                                     />
@@ -69,7 +71,10 @@ export default function DataForm({ formData }: any) {
                                  .slice(1, -1)
                                  .split(',')
                                  .map((option: string, idx: number) => (
-                                    <SelectItem key={idx} value={option.trim()}>
+                                    <SelectItem
+                                       key={idx + 1}
+                                       value={option.trim()}
+                                    >
                                        {option.trim()}
                                     </SelectItem>
                                  ))}

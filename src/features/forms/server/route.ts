@@ -45,7 +45,7 @@ export const formRoute = new Hono()
          data: result,
       });
    })
-   .get('/:formId', sessionMiddleware, async (c) => {
+   .get('/:formId', async (c) => {
       const { formId } = c.req.param();
 
       const result = await db.form.findUnique({

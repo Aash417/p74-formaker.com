@@ -9,12 +9,25 @@ import {
 
 export const { auth } = NextAuth(authConfig);
 
+export const isPublicRoute = (pathname: string) => {
+   // Match exact static routes
+   if (publicRoutes.includes(pathname)) return true;
+
+   // Match dynamic public routes
+   const dynamicPublicRoutes = [
+      /^\/form\/[^/]+\/response$/, // Match /form/:formId/response
+      /^\/api\/hono\/forms\/[^/]+\/responses$/, // Match /api/hono/forms/:formId/responses
+      /^\/api\/hono\/forms\/[^/]+$/, // Match /api/hono/forms/:formId
+   ];
+   return dynamicPublicRoutes.some((pattern) => pattern.test(pathname));
+};
+
 export default auth((req) => {
    const { nextUrl } = req;
    const isLoggedIn = !!req.auth;
 
    const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+   const isPublic = isPublicRoute(nextUrl.pathname);
    const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
    if (isApiAuthRoute) {
@@ -28,8 +41,8 @@ export default auth((req) => {
       return;
    }
 
-   if (!isLoggedIn && !isPublicRoute) {
-      return Response.redirect(new URL('/auth/sign-in', nextUrl));
+   if (!isLoggedIn && !isPublic) {
+      return Response.redirect(new URL('/', nextUrl));
    }
 
    console.log('route : ', req.nextUrl.pathname);

@@ -1,7 +1,6 @@
 import { client } from '@/lib/rpc';
 import { useMutation } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 type ResponseType = InferResponseType<
@@ -12,8 +11,6 @@ type RequestType = InferRequestType<
 >;
 
 export function useCreateResponse() {
-   const router = useRouter();
-
    const mutation = useMutation<ResponseType, Error, RequestType>({
       mutationFn: async ({ json, param: { formId } }) => {
          const response = await client.api.hono.forms[':formId'].responses[
@@ -23,7 +20,7 @@ export function useCreateResponse() {
 
          return await response.json();
       },
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
          toast.success('Response submitted');
          // router.push(`/form/${data}`);
       },

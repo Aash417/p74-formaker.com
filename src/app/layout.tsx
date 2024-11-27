@@ -1,7 +1,7 @@
-import Navbar from '@/components/navbar';
 import Providers from '@/components/query-provider';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 import localFont from 'next/font/local';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import './globals.css';
@@ -34,8 +34,9 @@ export default function RootLayout({
          >
             <Toaster />
             <Providers>
-               <Navbar />
-               <NuqsAdapter>{children}</NuqsAdapter>
+               <NuqsAdapter>
+                  <SessionProvider>{children}</SessionProvider>
+               </NuqsAdapter>
             </Providers>
          </body>
       </html>

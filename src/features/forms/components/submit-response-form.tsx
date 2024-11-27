@@ -12,21 +12,20 @@ import {
    SelectItem,
    SelectTrigger,
    SelectValue,
-   SelectGroup,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useCreateResponse } from '@/features/forms/api/use-create-response';
 import { useGetForm } from '@/features/forms/api/use-get-form';
-import { Controller, useForm } from 'react-hook-form';
-import { useCreateResponse } from '../api/use-create-response';
 import { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 type Props = {
    formId: string;
 };
 
-export default function SubmitResponseForm({ formId }: Props) {
+export default function SubmitResponseForm({ formId }: Readonly<Props>) {
    const { data, isLoading } = useGetForm(formId);
-   const { mutate, isPending } = useCreateResponse();
+   const { mutate } = useCreateResponse();
 
    const {
       reset,
@@ -61,7 +60,7 @@ export default function SubmitResponseForm({ formId }: Props) {
    if (!data)
       return (
          <div className="flex h-full items-center justify-center">
-            Coundnt fetch data at the moment
+            Could not fetch data at the moment
          </div>
       );
 
@@ -147,16 +146,17 @@ export default function SubmitResponseForm({ formId }: Props) {
                               {...field}
                               value={field.value} // Bind the value from the form state
                               onValueChange={(value) => field.onChange(value)} // Update the form state on change
+                              key={el.id}
                            >
                               {el
                                  .options!.slice(1, -1)
                                  .split(',')
                                  .map((option: string, idx: number) => (
-                                    <div className="flex items-center space-x-2">
-                                       <RadioGroupItem
-                                          key={idx}
-                                          value={option.trim()}
-                                       />
+                                    <div
+                                       className="flex items-center space-x-2"
+                                       key={idx + 1}
+                                    >
+                                       <RadioGroupItem value={option.trim()} />
                                        <Label>{option.trim()}</Label>
                                     </div>
                                  ))}
@@ -172,11 +172,10 @@ export default function SubmitResponseForm({ formId }: Props) {
                         rules={{ required: el.isRequired }}
                         render={({ field }) => (
                            <Select
-                              {...field}
                               onValueChange={(value) => field.onChange(value)}
                               value={field.value}
                            >
-                              <SelectTrigger>
+                              <SelectTrigger ref={field.ref}>
                                  <SelectValue placeholder="Select an option" />
                               </SelectTrigger>
                               <SelectContent>
@@ -184,14 +183,12 @@ export default function SubmitResponseForm({ formId }: Props) {
                                     .options!.slice(1, -1)
                                     .split(',')
                                     .map((option: string, idx: number) => (
-                                       <SelectGroup>
-                                          <SelectItem
-                                             key={idx}
-                                             value={option.trim()}
-                                          >
-                                             {option.trim()}
-                                          </SelectItem>
-                                       </SelectGroup>
+                                       <SelectItem
+                                          key={idx + 1}
+                                          value={option.trim()}
+                                       >
+                                          {option.trim()}
+                                       </SelectItem>
                                     ))}
                               </SelectContent>
                            </Select>
