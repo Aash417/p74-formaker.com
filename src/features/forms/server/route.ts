@@ -104,16 +104,56 @@ export const formRoute = new Hono()
    )
    .get('/:formId/responses', sessionMiddleware, async (c) => {
       const { formId } = c.req.param();
+
+      const questions = await db.form.findFirst({
+         where: {
+            id: formId,
+         },
+         select: {
+            fields: {
+               select: {
+                  id: true,
+                  label: true,
+               },
+            },
+         },
+      });
+
       const result = await db.response.findMany({
          where: {
             formId,
          },
-         include: {
-            responseFields: true,
+         select: {
+            submittedBy: true,
+            responseFields: {
+               select: {
+                  fieldId: true,
+                  value: true,
+               },
+            },
          },
       });
 
+      // Create a mapping of fieldId -> label from questions
+      const fieldLabelMap = Object.fromEntries(
+         questions!.fields.map((field) => [field.id, field.label]),
+      );
+
+      // Format responses to match the desired shape
+      const formattedResponses = result.map((response) => {
+         const mappedFields = Object.fromEntries(
+            response.responseFields.map((el) => [
+               fieldLabelMap[el.fieldId],
+               el.value,
+            ]),
+         );
+         return {
+            submittedBy: response.submittedBy,
+            ...mappedFields,
+         };
+      });
+
       return c.json({
-         data: result,
+         data: formattedResponses,
       });
    });

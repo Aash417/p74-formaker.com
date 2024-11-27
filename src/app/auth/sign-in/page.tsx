@@ -9,7 +9,6 @@ export default function Page() {
       signIn('google', {
          callbackUrl: '/dashboard',
       });
-      console.log('button clicked');
    }
    return (
       <div className="flex h-screen items-center justify-center">

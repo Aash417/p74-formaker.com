@@ -19,7 +19,9 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useDeleteForm } from '@/features/forms/api/use-delete-form';
 import { useGetForm } from '@/features/forms/api/use-get-form';
+import { useGetResponses } from '@/features/forms/api/use-get-responses';
 import DataForm from '@/features/forms/components/data-form';
+import DataResponses from '@/features/forms/components/data-responses';
 import { Copy, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
@@ -34,8 +36,12 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
       defaultValue: 'form',
    });
 
-   const { data, isLoading } = useGetForm(formId);
    const { mutate } = useDeleteForm();
+   const { data: forms, isLoading: loadingForms } = useGetForm(formId);
+   const { data: responses, isLoading: loadingResponse } = useGetResponses({
+      formId,
+   });
+   const isLoading = loadingForms || loadingResponse;
 
    function handleDelete() {
       mutate({ param: { formId } });
@@ -47,7 +53,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
    }
 
    if (isLoading) return <Loader />;
-   if (!data)
+   if (!forms || !responses)
       return (
          <div className="flex h-full items-center justify-center">
             Could not fetch data at the moment
@@ -163,10 +169,10 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
                ) : (
                   <>
                      <TabsContent value="form" className="mt-0">
-                        <DataForm formData={data} />
+                        <DataForm formData={forms} />
                      </TabsContent>
                      <TabsContent value="responses" className="mt-0">
-                        responses
+                        <DataResponses data={responses} />
                      </TabsContent>
                   </>
                )}
