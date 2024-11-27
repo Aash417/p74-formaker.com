@@ -45,7 +45,9 @@ model Form {
   description String?
   createdAt   DateTime @default(now())
   creatorId   String
-  fields      Field[]
+
+  fields   Field[]
+  Response Response[]
 }
 
 model Field {
@@ -56,6 +58,8 @@ model Field {
   options    String?
   isRequired Boolean   @default(false)
   form       Form      @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  ResponseField ResponseField[]
 }
 
 enum FieldType {
@@ -63,4 +67,22 @@ enum FieldType {
   textarea
   radio
   select
+}
+
+model Response {
+  id             String          @id @default(cuid())
+  submittedBy    String
+  formId         String
+  form           Form            @relation(fields: [formId], references: [id], onDelete: Cascade)
+  createdAt      DateTime        @default(now())
+  responseFields ResponseField[]
+}
+
+model ResponseField {
+  id         String   @id @default(cuid())
+  responseId String
+  response   Response @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  fieldId    String
+  field      Field    @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  value      String
 }

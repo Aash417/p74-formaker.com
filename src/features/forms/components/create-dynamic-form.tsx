@@ -1,6 +1,5 @@
 'use client';
 
-import { useCreateForm } from '@/features/forms/api/use-create-form';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -13,9 +12,10 @@ import {
    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useCreateForm } from '@/features/forms/api/use-create-form';
 import { FieldEnumType, FieldType } from '@/features/forms/server/types';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useRef } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
 export default function CreateDynamicForm() {
    const fieldRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -42,12 +42,7 @@ export default function CreateDynamicForm() {
    });
 
    function onSubmit(data: any) {
-      if (!data.title) {
-         alert('Title is required!');
-         return;
-      }
       mutate({ json: data });
-      console.log('Submitted Data:', data);
    }
 
    function handleAddField() {
@@ -188,7 +183,7 @@ export default function CreateDynamicForm() {
                </div>
             ))}
 
-            <div className="flex justify-end gap-x-3">
+            <div className="flex justify-between gap-x-3">
                <Button variant="outline" type="button" onClick={handleAddField}>
                   Add Field
                </Button>

@@ -3,7 +3,7 @@ import { sessionMiddleware } from '@/lib/session-middleware';
 import { zValidator } from '@hono/zod-validator';
 import { FieldType } from '@prisma/client';
 import { Hono } from 'hono';
-import { FormSchema } from './schemas';
+import { FormSchema, ResponseSchema } from './schemas';
 
 export const formRoute = new Hono()
    .post('/', sessionMiddleware, zValidator('json', FormSchema), async (c) => {
@@ -67,6 +67,49 @@ export const formRoute = new Hono()
       const result = await db.form.delete({
          where: {
             id: formId,
+         },
+      });
+
+      return c.json({
+         data: result,
+      });
+   })
+   .post(
+      '/:formId/responses',
+      zValidator('json', ResponseSchema),
+      async (c) => {
+         const { formId } = c.req.param();
+         const { submittedBy, responseFields } = c.req.valid('json');
+
+         const result = await db.response.create({
+            data: {
+               submittedBy,
+               formId,
+               responseFields: {
+                  create: responseFields.map((responseField) => ({
+                     fieldId: responseField.fieldId,
+                     value: responseField.value,
+                  })),
+               },
+            },
+            include: {
+               responseFields: true,
+            },
+         });
+
+         return c.json({
+            data: result,
+         });
+      },
+   )
+   .get('/:formId/responses', sessionMiddleware, async (c) => {
+      const { formId } = c.req.param();
+      const result = await db.response.findMany({
+         where: {
+            formId,
+         },
+         include: {
+            responseFields: true,
          },
       });
 

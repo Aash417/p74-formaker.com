@@ -5,6 +5,7 @@ import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import {
    Dialog,
+   DialogClose,
    DialogContent,
    DialogDescription,
    DialogFooter,
@@ -12,11 +13,13 @@ import {
    DialogTitle,
    DialogTrigger,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useDeleteForm } from '@/features/forms/api/use-delete-form';
 import { useGetForm } from '@/features/forms/api/use-get-form';
 import DataForm from '@/features/forms/components/data-form';
-import { PlusIcon } from 'lucide-react';
+import { Copy, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
@@ -25,6 +28,8 @@ type Props = {
 };
 
 export default function Page({ params: { formId } }: Props) {
+   const currentURL = window.location.href;
+
    const { data, isLoading } = useGetForm(formId);
    const { mutate } = useDeleteForm();
    const [view, setView] = useQueryState('form-view', {
@@ -35,6 +40,10 @@ export default function Page({ params: { formId } }: Props) {
       mutate({ param: { formId } });
    }
 
+   function handleCopy() {
+      const link = `${currentURL}/response`;
+      navigator.clipboard.writeText(link);
+   }
    if (isLoading) return <Loader />;
    if (!data)
       return (
@@ -64,6 +73,52 @@ export default function Page({ params: { formId } }: Props) {
                </TabsList>
 
                <div className="flex gap-x-3">
+                  <Dialog>
+                     <DialogTrigger asChild>
+                        <Button variant="outline">Send</Button>
+                     </DialogTrigger>
+
+                     <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                           <DialogTitle>Share link</DialogTitle>
+                           <DialogDescription>
+                              Anyone who has this link will be able to submit
+                              response.
+                           </DialogDescription>
+                        </DialogHeader>
+
+                        <div className="flex items-center space-x-2">
+                           <div className="grid flex-1 gap-2">
+                              <Label htmlFor="link" className="sr-only">
+                                 Link
+                              </Label>
+                              <Input
+                                 id="link"
+                                 defaultValue={`${currentURL}/response`}
+                                 readOnly
+                              />
+                           </div>
+                           <Button
+                              onClick={handleCopy}
+                              type="submit"
+                              size="sm"
+                              className="px-3"
+                           >
+                              <span className="sr-only">Copy</span>
+                              <Copy />
+                           </Button>
+                        </div>
+
+                        <DialogFooter className="sm:justify-start">
+                           <DialogClose asChild>
+                              <Button type="button" variant="secondary">
+                                 Close
+                              </Button>
+                           </DialogClose>
+                        </DialogFooter>
+                     </DialogContent>
+                  </Dialog>
+
                   <Dialog>
                      <DialogTrigger asChild>
                         <Button variant="outline">Delete</Button>
