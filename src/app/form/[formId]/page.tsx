@@ -24,7 +24,6 @@ import DataForm from '@/features/forms/components/data-form';
 import DataResponses from '@/features/forms/components/data-responses';
 import { Copy, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
 
 type Props = {
    params: { formId: string };
@@ -32,9 +31,6 @@ type Props = {
 
 export default function Page({ params: { formId } }: Readonly<Props>) {
    const currentURL = window.location.href;
-   const [view, setView] = useQueryState('form-view', {
-      defaultValue: 'form',
-   });
 
    const { mutate } = useDeleteForm();
    const { data: forms, isLoading: loadingForms } = useGetForm(formId);
@@ -64,11 +60,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
       <div>
          <Navbar />
 
-         <Tabs
-            defaultValue={view}
-            onValueChange={setView}
-            className="w-full flex-1 rounded-lg border"
-         >
+         <Tabs defaultValue="form" className="w-full flex-1 rounded-lg border">
             <div className="flex h-full flex-col overflow-auto p-4">
                <div className="flex flex-col items-center justify-between gap-y-2 lg:flex-row">
                   <TabsList className="w-full lg:w-auto">
@@ -164,18 +156,12 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
                </div>
                <DottedSeparator className="my-5" />
 
-               {isLoading ? (
-                  <Loader />
-               ) : (
-                  <>
-                     <TabsContent value="form" className="mt-0">
-                        <DataForm formData={forms} />
-                     </TabsContent>
-                     <TabsContent value="responses" className="mt-0">
-                        <DataResponses data={responses} />
-                     </TabsContent>
-                  </>
-               )}
+               <TabsContent value="form" className="mt-0">
+                  <DataForm formData={forms} />
+               </TabsContent>
+               <TabsContent value="responses" className="mt-0">
+                  <DataResponses data={responses} />
+               </TabsContent>
             </div>
          </Tabs>
       </div>

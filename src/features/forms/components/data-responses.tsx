@@ -1,18 +1,6 @@
 'use client';
 
-import {
-   ColumnDef,
-   ColumnFiltersState,
-   VisibilityState,
-   flexRender,
-   getCoreRowModel,
-   getFilteredRowModel,
-   getPaginationRowModel,
-   useReactTable,
-} from '@tanstack/react-table';
-import { ChevronDown } from 'lucide-react';
-import * as React from 'react';
-
+import { ExportToExcel } from '@/components/export-to-excel';
 import { Button } from '@/components/ui/button';
 import {
    DropdownMenu,
@@ -29,6 +17,18 @@ import {
    TableHeader,
    TableRow,
 } from '@/components/ui/table';
+import {
+   ColumnDef,
+   ColumnFiltersState,
+   VisibilityState,
+   flexRender,
+   getCoreRowModel,
+   getFilteredRowModel,
+   getPaginationRowModel,
+   useReactTable,
+} from '@tanstack/react-table';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 export default function DataResponses({ data }: any) {
    const head = Object.keys(data[0]);
@@ -42,11 +42,10 @@ export default function DataResponses({ data }: any) {
       cell: ({ row }) => <div className="lowercase">{row.getValue(el)}</div>,
    }));
 
-   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-      [],
+   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+      {},
    );
-   const [columnVisibility, setColumnVisibility] =
-      React.useState<VisibilityState>({});
 
    const table = useReactTable({
       data,
@@ -64,7 +63,7 @@ export default function DataResponses({ data }: any) {
 
    return (
       <div className="w-full">
-         <div className="flex items-center py-4">
+         <div className="flex items-center justify-between py-4">
             <Input
                placeholder="Filter emails..."
                value={
@@ -79,32 +78,38 @@ export default function DataResponses({ data }: any) {
                }
                className="max-w-sm"
             />
-            <DropdownMenu>
-               <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="ml-auto">
-                     Columns <ChevronDown />
-                  </Button>
-               </DropdownMenuTrigger>
-               <DropdownMenuContent align="end">
-                  {table
-                     .getAllColumns()
-                     .filter((column) => column.getCanHide())
-                     .map((column) => {
-                        return (
-                           <DropdownMenuCheckboxItem
-                              key={column.id}
-                              className="capitalize"
-                              checked={column.getIsVisible()}
-                              onCheckedChange={(value) =>
-                                 column.toggleVisibility(!!value)
-                              }
-                           >
-                              {column.id}
-                           </DropdownMenuCheckboxItem>
-                        );
-                     })}
-               </DropdownMenuContent>
-            </DropdownMenu>
+
+            <div className="flex gap-x-3">
+               <ExportToExcel apiData={data} fileName="Responses" />
+
+               <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                     <Button variant="outline" className="ml-auto">
+                        Columns <ChevronDown />
+                     </Button>
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent align="end">
+                     {table
+                        .getAllColumns()
+                        .filter((column) => column.getCanHide())
+                        .map((column) => {
+                           return (
+                              <DropdownMenuCheckboxItem
+                                 key={column.id}
+                                 className="capitalize"
+                                 checked={column.getIsVisible()}
+                                 onCheckedChange={(value) =>
+                                    column.toggleVisibility(!!value)
+                                 }
+                              >
+                                 {column.id}
+                              </DropdownMenuCheckboxItem>
+                           );
+                        })}
+                  </DropdownMenuContent>
+               </DropdownMenu>
+            </div>
          </div>
 
          <div className="rounded-md border">
@@ -127,6 +132,7 @@ export default function DataResponses({ data }: any) {
                      </TableRow>
                   ))}
                </TableHeader>
+
                <TableBody>
                   {table.getRowModel().rows?.length ? (
                      table.getRowModel().rows.map((row) => (
@@ -162,6 +168,7 @@ export default function DataResponses({ data }: any) {
             <div className="flex-1 font-bold">
                {table.getFilteredRowModel().rows.length} Responses.
             </div>
+
             <div className="space-x-2">
                <Button
                   variant="outline"
@@ -171,6 +178,7 @@ export default function DataResponses({ data }: any) {
                >
                   Previous
                </Button>
+
                <Button
                   variant="outline"
                   size="sm"
