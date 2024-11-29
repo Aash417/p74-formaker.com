@@ -30,6 +30,7 @@ export function UserButton() {
                </AvatarFallback>
             </Avatar>
          </DropdownMenuTrigger>
+
          <DropdownMenuContent
             align="end"
             side="bottom"

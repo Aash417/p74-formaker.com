@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Hero() {
    return (
@@ -78,7 +78,7 @@ export default function Hero() {
 
                      <div className="mt-8 sm:flex sm:items-center sm:justify-center sm:space-x-5 lg:mt-12 lg:justify-start">
                         <a
-                           href="#"
+                           href="/dashboard"
                            title=""
                            className="font-pj justif-center inline-flex items-center rounded-xl border border-transparent bg-gray-900 px-8 py-4 text-lg font-bold text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                            role="button"

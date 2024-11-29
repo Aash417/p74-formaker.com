@@ -47,18 +47,9 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
 
    return (
       <>
-         <div className="space-y-2">
-            <div className="flex gap-x-3 text-2xl">
-               <p className="font-bold">Title</p>
-               <p className="font-bold">:</p>
-               <p>{title}</p>
-            </div>
-
-            <div className="flex gap-x-3 text-xl text-muted-foreground">
-               <p className="font-bold">Description</p>
-               <p className="font-bold">:</p>
-               <p>{description}</p>
-            </div>
+         <div className="flex flex-col gap-x-3">
+            <p className="text-3xl font-bold">{title}</p>
+            <p className="text-xl text-muted-foreground">{description}</p>
          </div>
 
          <DottedSeparator className="pt-3" />

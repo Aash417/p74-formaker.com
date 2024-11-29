@@ -60,18 +60,18 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
       <div>
          <Navbar />
 
-         <Tabs defaultValue="form" className="w-full flex-1 rounded-lg border">
+         <Tabs defaultValue="form">
             <div className="flex h-full flex-col overflow-auto p-4">
                <div className="flex flex-col items-center justify-between gap-y-2 lg:flex-row">
                   <TabsList className="w-full lg:w-auto">
                      <TabsTrigger value="form" className="h-8 w-full lg:w-auto">
-                        Form
+                        Form preview
                      </TabsTrigger>
                      <TabsTrigger
                         value="responses"
                         className="h-8 w-full lg:w-auto"
                      >
-                        Responses
+                        Received responses
                      </TabsTrigger>
                   </TabsList>
 
@@ -159,6 +159,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
                <TabsContent value="form" className="mt-0">
                   <DataForm formData={forms} />
                </TabsContent>
+
                <TabsContent value="responses" className="mt-0">
                   <DataResponses data={responses} />
                </TabsContent>

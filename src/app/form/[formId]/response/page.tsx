@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import SubmitResponseForm from '@/features/forms/components/submit-response-form';
 import db from '@/lib/db';
 
@@ -26,10 +27,15 @@ export default async function Page({ params: { formId } }: Props) {
 
    if (!!formExists)
       return (
-         <div className="flex h-full justify-center">
-            <div className="w-1/2 rounded-lg p-1 pb-7">
-               <SubmitResponseForm data={{ ...data }} formId={formId} />
-            </div>
+         <div className="flex h-full justify-center py-4">
+            <Card>
+               <CardHeader></CardHeader>
+               <CardContent>
+                  <div className="w-[550px] space-y-6">
+                     <SubmitResponseForm data={{ ...data }} formId={formId} />
+                  </div>
+               </CardContent>
+            </Card>
          </div>
       );
 
