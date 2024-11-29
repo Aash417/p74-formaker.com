@@ -14,6 +14,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateForm } from '@/features/forms/api/use-create-form';
 import { FieldEnumType, FieldType } from '@/features/forms/server/types';
+import { cn } from '@/lib/utils';
 import { useRef } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
@@ -21,7 +22,13 @@ export default function CreateDynamicForm() {
    const fieldRefs = useRef<(HTMLDivElement | null)[]>([]);
    const { mutate } = useCreateForm();
 
-   const { control, handleSubmit, watch, setValue } = useForm({
+   const {
+      control,
+      handleSubmit,
+      watch,
+      setValue,
+      formState: { errors, isSubmitSuccessful },
+   } = useForm({
       defaultValues: {
          title: '',
          description: '',
@@ -66,19 +73,28 @@ export default function CreateDynamicForm() {
       <div>
          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-               <Label>Title (required):</Label>
+               <Label>
+                  Title<span className="text-red-500">*</span> :
+               </Label>
                <Controller
                   name="title"
                   control={control}
                   rules={{ required: 'Title is required' }}
                   render={({ field }) => (
-                     <Input {...field} placeholder="Enter the form title" />
+                     <Input
+                        {...field}
+                        placeholder="Enter the form title"
+                        className={cn(errors['title'] && 'border-destructive')}
+                     />
                   )}
                />
+               {errors['title'] && (
+                  <p className="text-sm text-red-500">Title is required.</p>
+               )}
             </div>
 
             <div>
-               <Label>Description (optional):</Label>
+               <Label>Description :</Label>
                <Controller
                   name="description"
                   control={control}
@@ -100,17 +116,29 @@ export default function CreateDynamicForm() {
                   className="relative space-y-4 rounded border p-4"
                >
                   <div>
-                     <Label>Label:</Label>
+                     <Label>
+                        Label<span className="text-red-500">*</span> :
+                     </Label>
                      <Controller
                         name={`fields.${index}.label`}
                         control={control}
+                        rules={{ required: true }}
                         render={({ field }) => (
                            <Input
                               {...field}
                               placeholder="Enter the field label"
+                              className={cn(
+                                 errors.fields?.[index]?.label &&
+                                    'border-destructive',
+                              )}
                            />
                         )}
                      />
+                     {errors.fields?.[index]?.label && (
+                        <p className="text-sm text-red-500">
+                           Label is required.
+                        </p>
+                     )}
                   </div>
 
                   <div>

@@ -30,7 +30,7 @@ type Props = {
 };
 
 export default function Page({ params: { formId } }: Readonly<Props>) {
-   const currentURL = window.location.href;
+   const currentURL = `${process.env.NEXT_PUBLIC_APP_URL}/form/${formId}`;
 
    const { mutate } = useDeleteForm();
    const { data: forms, isLoading: loadingForms } = useGetForm(formId);

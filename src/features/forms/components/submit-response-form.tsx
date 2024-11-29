@@ -1,7 +1,6 @@
 'use client';
 
 import { DottedSeparator } from '@/components/dotted-separator';
-import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,28 +14,25 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateResponse } from '@/features/forms/api/use-create-response';
-import { useGetForm } from '@/features/forms/api/use-get-form';
-import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type Props = {
    formId: string;
+   data: any;
 };
 
-export default function SubmitResponseForm({ formId }: Readonly<Props>) {
-   const { data, isLoading } = useGetForm(formId);
-   const { mutate } = useCreateResponse();
+export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
+   const { mutate } = useCreateResponse(formId);
 
+   const { title, description, fields } = data;
    const {
-      reset,
       control,
       handleSubmit,
-      formState: { errors, isSubmitSuccessful },
-      formState,
+      formState: { errors },
    } = useForm();
 
    function onSubmit(values: any) {
-      const responseFields = fields.map((field) => ({
+      const responseFields = fields.map((field: any) => ({
          fieldId: field.id,
          value: values[field.id] || '',
       }));
@@ -47,24 +43,7 @@ export default function SubmitResponseForm({ formId }: Readonly<Props>) {
       };
 
       mutate({ json: finalValues, param: { formId } });
-      // reset({ ...values });
    }
-
-   useEffect(() => {
-      if (isSubmitSuccessful) {
-         reset();
-      }
-   }, [formState, isSubmitSuccessful, reset]);
-
-   if (isLoading) return <Loader />;
-   if (!data)
-      return (
-         <div className="flex h-full items-center justify-center">
-            Could not fetch data at the moment
-         </div>
-      );
-
-   const { title, description, fields } = data;
 
    return (
       <>
@@ -107,7 +86,7 @@ export default function SubmitResponseForm({ formId }: Readonly<Props>) {
                )}
             </div>
 
-            {fields.map((el) => (
+            {fields?.map((el: any) => (
                <div key={el.id} className="space-y-2">
                   <Label>
                      {el.label}{' '}

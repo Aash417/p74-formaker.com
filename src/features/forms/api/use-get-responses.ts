@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export function useGetResponses({ formId }: { formId: string }) {
    const query = useQuery({
-      queryKey: ['responses'],
+      queryKey: ['responses', formId],
       queryFn: async () => {
          const response = await client.api.hono.forms[':formId'][
             'responses'

@@ -39,7 +39,16 @@ export default function DataResponses({ data }: any) {
    const columns: ColumnDef<DynamicQuestionType>[] = head.map((el) => ({
       accessorKey: el,
       header: () => <div>{`${el[0].toUpperCase()}${el.slice(1)}`}</div>,
-      cell: ({ row }) => <div className="lowercase">{row.getValue(el)}</div>,
+      cell: ({ row }) => {
+         const value = row.getValue(el) as string;
+         const words = value.split(' ');
+         const limitedWords =
+            words.length > 4
+               ? words.slice(0, 4).join(' ') + '...'
+               : words.join(' ');
+
+         return <div className="lowercase">{limitedWords}</div>;
+      },
    }));
 
    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -123,9 +132,9 @@ export default function DataResponses({ data }: any) {
                                  {header.isPlaceholder
                                     ? null
                                     : flexRender(
-                                       header.column.columnDef.header,
-                                       header.getContext(),
-                                    )}
+                                         header.column.columnDef.header,
+                                         header.getContext(),
+                                      )}
                               </TableHead>
                            );
                         })}
