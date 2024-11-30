@@ -2,8 +2,6 @@ import { formRoute } from '@/features/forms/server/route';
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 
-export const runtime = 'edge';
-
 const app = new Hono().basePath('/api/hono');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
