@@ -4,6 +4,7 @@ import { DottedSeparator } from '@/components/dotted-separator';
 import Loader from '@/components/loader';
 import Navbar from '@/components/navbar';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
    Dialog,
    DialogClose,
@@ -49,6 +50,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
    }
 
    if (isLoading) return <Loader />;
+
    if (!forms || !responses)
       return (
          <div className="flex h-full items-center justify-center">
@@ -161,7 +163,25 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
                </TabsContent>
 
                <TabsContent value="responses" className="mt-0">
-                  <DataResponses data={responses} />
+                  {responses?.length === 0 ? (
+                     <div className="p-[150px]">
+                        <Card>
+                           <CardHeader>
+                              <div className="flex justify-center">
+                                 No response received yet
+                              </div>
+                           </CardHeader>
+                           <CardContent>
+                              <div className="flex justify-center text-muted-foreground">
+                                 Share this form with your audience to collect
+                                 responses.
+                              </div>
+                           </CardContent>
+                        </Card>
+                     </div>
+                  ) : (
+                     <DataResponses data={responses} />
+                  )}
                </TabsContent>
             </div>
          </Tabs>

@@ -6,7 +6,7 @@ type Props = {
    params: { formId: string };
 };
 
-export default async function Page({ params: { formId } }: Props) {
+export default async function Page({ params: { formId } }: Readonly<Props>) {
    const formExists = await db.form.findUnique({
       where: {
          id: formId,
@@ -25,17 +25,22 @@ export default async function Page({ params: { formId } }: Props) {
    }
    const { data } = await response.json();
 
-   if (!!formExists)
+   if (formExists)
       return (
-         <div className="flex h-full justify-center py-4">
-            <Card>
-               <CardHeader></CardHeader>
-               <CardContent>
-                  <div className="w-[550px] space-y-6">
-                     <SubmitResponseForm data={{ ...data }} formId={formId} />
-                  </div>
-               </CardContent>
-            </Card>
+         <div className="h-screen bg-slate-50">
+            <div className="flex justify-center bg-slate-50 p-4">
+               <Card>
+                  <CardHeader></CardHeader>
+                  <CardContent>
+                     <div className="w-[550px] space-y-6">
+                        <SubmitResponseForm
+                           data={{ ...data }}
+                           formId={formId}
+                        />
+                     </div>
+                  </CardContent>
+               </Card>
+            </div>
          </div>
       );
 

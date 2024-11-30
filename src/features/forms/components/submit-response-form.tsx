@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateResponse } from '@/features/forms/api/use-create-response';
+import { cn } from '@/lib/utils';
 import { Controller, useForm } from 'react-hook-form';
 
 type Props = {
@@ -22,8 +23,7 @@ type Props = {
 };
 
 export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
-   const { mutate } = useCreateResponse(formId);
-
+   const { mutate, isPending } = useCreateResponse(formId);
    const { title, description, fields } = data;
    const {
       control,
@@ -69,6 +69,9 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
                         {...field}
                         type="email"
                         placeholder="aashish@mail.com"
+                        className={cn(
+                           errors['submittedBy'] && 'border-destructive',
+                        )}
                      />
                   )}
                />
@@ -90,7 +93,13 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
                         control={control}
                         rules={{ required: el.isRequired }}
                         render={({ field }) => (
-                           <Input {...field} placeholder={el.label} />
+                           <Input
+                              {...field}
+                              disabled={isPending}
+                              className={cn(
+                                 errors[el.id] && 'border-destructive',
+                              )}
+                           />
                         )}
                      />
                   )}
@@ -101,7 +110,13 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
                         control={control}
                         rules={{ required: el.isRequired }}
                         render={({ field }) => (
-                           <Textarea {...field} placeholder={el.label} />
+                           <Textarea
+                              {...field}
+                              disabled={isPending}
+                              className={cn(
+                                 errors[el.id] && 'border-destructive',
+                              )}
+                           />
                         )}
                      />
                   )}
@@ -117,6 +132,7 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
                               value={field.value} // Bind the value from the form state
                               onValueChange={(value) => field.onChange(value)} // Update the form state on change
                               key={el.id}
+                              disabled={isPending}
                            >
                               {el
                                  .options!.slice(1, -1)
@@ -144,8 +160,14 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
                            <Select
                               onValueChange={(value) => field.onChange(value)}
                               value={field.value}
+                              disabled={isPending}
                            >
-                              <SelectTrigger ref={field.ref}>
+                              <SelectTrigger
+                                 ref={field.ref}
+                                 className={cn(
+                                    errors[el.id] && 'border-destructive',
+                                 )}
+                              >
                                  <SelectValue placeholder="Select an option" />
                               </SelectTrigger>
                               <SelectContent>
@@ -175,7 +197,9 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
             ))}
 
             <div className="flex justify-end">
-               <Button type="submit">Submit Response</Button>
+               <Button type="submit" disabled={isPending}>
+                  Submit Response
+               </Button>
             </div>
          </form>
       </>

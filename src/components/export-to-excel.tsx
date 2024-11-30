@@ -22,7 +22,7 @@ export const ExportToExcel = ({ apiData, fileName }: Props) => {
    };
 
    return (
-      <Button onClick={(e) => exportToCSV(apiData, fileName)} variant="outline">
+      <Button onClick={() => exportToCSV(apiData, fileName)} variant="outline">
          Export data to excel
       </Button>
    );

@@ -20,11 +20,13 @@ export default function Page({ params: { formId } }: Props) {
                      Form Submitted Successful
                   </h1>
                   <p className="text-gray-500 dark:text-gray-400 md:text-xl">
-                     <Link
-                        href={`${process.env.NEXT_PUBLIC_APP_URL}/form/${formId}/response`}
-                     >
-                        <Button variant="link">Submit another response</Button>
-                     </Link>
+                     <Button variant="link" asChild>
+                        <Link
+                           href={`${process.env.NEXT_PUBLIC_APP_URL}/form/${formId}/response`}
+                        >
+                           Submit another response
+                        </Link>
+                     </Button>
                   </p>
                </div>
             </CardContent>

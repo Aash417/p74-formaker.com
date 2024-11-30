@@ -5,7 +5,7 @@ import UserButton from './user-button';
 
 export default function Navbar() {
    return (
-      <div className="flex items-center justify-between border-b p-2 pl-5 pr-5">
+      <div className="flex h-[50px] items-center justify-between border-b p-2 pl-5 pr-5">
          <div className="relative flex flex-row items-center gap-1 text-lg font-semibold">
             <Link href="/dashboard">
                <Image

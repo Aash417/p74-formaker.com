@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
                <div className="flex items-center gap-2">
-                  <img
+                  <Image
                      src="/logo.svg"
                      alt="logo"
                      width={30}
@@ -59,7 +60,20 @@ export default function Footer() {
             <hr className="mb-6 mt-6 border-gray-200" />
 
             <p className="text-center text-sm text-gray-600">
-               © Copyright 2024, All Rights Reserved by Aashish
+               Built by
+               <Link
+                  href="https://x.com/aashish_kathait"
+                  className="pl-1 text-black underline"
+               >
+                  aashish
+               </Link>
+               . The source code is available on
+               <Link
+                  href="https://github.com/Aash417"
+                  className="pl-1 text-black underline"
+               >
+                  GitHub
+               </Link>
             </p>
          </div>
       </section>
