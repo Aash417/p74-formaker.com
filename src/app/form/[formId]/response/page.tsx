@@ -1,31 +1,21 @@
+'use client';
+
+import Loader from '@/components/loader';
+import PageNotFound from '@/components/page-not-found';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useGetForm } from '@/features/forms/api/use-get-form';
 import SubmitResponseForm from '@/features/forms/components/submit-response-form';
-import db from '@/lib/db';
 
 type Props = {
    params: { formId: string };
 };
 
-export default async function Page({ params: { formId } }: Readonly<Props>) {
-   const formExists = await db.form.findUnique({
-      where: {
-         id: formId,
-      },
-   });
+export default function Page({ params: { formId } }: Readonly<Props>) {
+   const { data, isLoading } = useGetForm(formId);
 
-   const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/hono/forms/${formId}`;
+   if (isLoading) return <Loader />;
 
-   const response = await fetch(url);
-   if (!response.ok) {
-      return (
-         <div className="flex h-screen items-center">
-            There was an error fetching the data.
-         </div>
-      );
-   }
-   const { data } = await response.json();
-
-   if (formExists)
+   if (data)
       return (
          <div className="h-screen bg-slate-50">
             <div className="flex justify-center bg-slate-50 p-4">
@@ -44,5 +34,5 @@ export default async function Page({ params: { formId } }: Readonly<Props>) {
          </div>
       );
 
-   return <div>form not found</div>;
+   return <PageNotFound />;
 }
