@@ -11,9 +11,15 @@ import {
    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { FieldType } from '@/features/forms/server/types';
+import { GetFormResponseType } from '../api/use-get-form';
 
-export default function DataForm({ formData }: any) {
+type Props = {
+   formData: GetFormResponseType;
+};
+
+export default function DataForm({ formData }: Readonly<Props>) {
+   if (!formData) return <div>...</div>;
+
    return (
       <div className="flex h-full justify-center">
          <Card>
@@ -29,7 +35,7 @@ export default function DataForm({ formData }: any) {
 
                   <DottedSeparator />
 
-                  {formData.fields.map((field: FieldType, index: number) => (
+                  {formData.fields.map((field, index: number) => (
                      <div key={index + 1} className="space-y-2">
                         <Label>
                            {field.label}

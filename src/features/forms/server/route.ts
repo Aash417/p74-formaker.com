@@ -136,13 +136,13 @@ export const formRoute = new Hono()
 
       // Create a mapping of fieldId -> label from questions
       const fieldLabelMap = Object.fromEntries(
-         questions!.fields.map((field) => [field.id, field.label]),
+         questions!.fields.map((field: any) => [field.id, field.label]),
       );
 
       // Format responses to match the desired shape
-      const formattedResponses = result.map((response) => {
+      const formattedResponses = result.map((response: any) => {
          const mappedFields = Object.fromEntries(
-            response.responseFields.map((el) => [
+            response.responseFields.map((el: any) => [
                fieldLabelMap[el.fieldId],
                el.value,
             ]),

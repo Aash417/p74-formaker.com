@@ -5,8 +5,8 @@ import { IoAddSharp } from 'react-icons/io5';
 
 export default function Page() {
    return (
-      <div className="flex h-screen w-full flex-col bg-slate-50">
-         <div className="flex h-[250px] w-full items-center bg-slate-100 py-2">
+      <div className="flex min-h-screen w-full flex-grow flex-col bg-slate-50">
+         <div className="flex h-[200px] w-full items-center bg-slate-100 py-2">
             <div className="ml-[150px] flex flex-col justify-center">
                <span className="ml-2"> Start a new Form</span>
                <Link href="/form">

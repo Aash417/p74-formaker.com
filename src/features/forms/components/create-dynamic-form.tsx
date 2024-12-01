@@ -12,7 +12,10 @@ import {
    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useCreateForm } from '@/features/forms/api/use-create-form';
+import {
+   CreateDynamicFormRequestType,
+   useCreateForm,
+} from '@/features/forms/api/use-create-form';
 import { FieldEnumType, FieldType } from '@/features/forms/server/types';
 import { cn } from '@/lib/utils';
 import { useRef } from 'react';
@@ -48,7 +51,7 @@ export default function CreateDynamicForm() {
       name: 'fields',
    });
 
-   function onSubmit(data: any) {
+   function onSubmit(data: CreateDynamicFormRequestType) {
       mutate({ json: data });
    }
 

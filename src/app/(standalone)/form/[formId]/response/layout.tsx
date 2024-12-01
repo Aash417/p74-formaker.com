@@ -6,7 +6,7 @@ type Props = {
    children: React.ReactNode;
 };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children }: Readonly<Props>) {
    return (
       <div>
          <div className="flex items-center justify-between border-b p-2 pl-5 pr-5">

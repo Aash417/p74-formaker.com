@@ -2,7 +2,9 @@ import UserButton from '@/components/user-button';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+   children,
+}: Readonly<{ children: React.ReactNode }>) {
    return (
       <main>
          <div className="flex h-[50px] items-center justify-between border-b p-2 pl-5 pr-5">

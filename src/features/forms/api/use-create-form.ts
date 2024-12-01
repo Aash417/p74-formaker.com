@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 type ResponseType = InferResponseType<(typeof client.api.hono.forms)['$post']>;
 type RequestType = InferRequestType<(typeof client.api.hono.forms)['$post']>;
 
+export type CreateDynamicFormRequestType = RequestType['json'];
+
 export function useCreateForm() {
    const router = useRouter();
 

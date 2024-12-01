@@ -29,7 +29,7 @@ export default function HowItWorks() {
                      </h3>
                      <p className="mt-4 text-base text-gray-600">
                         Seamlessly create a free account with google. No
-                        password hassel.
+                        password hassle.
                      </p>
                   </div>
 
@@ -58,7 +58,7 @@ export default function HowItWorks() {
                         Collect responses
                      </h3>
                      <p className="mt-4 text-base text-gray-600">
-                        Share your form link with your audiance. Get responses
+                        Share your form link with your audience. Get responses
                         from across the globe.
                      </p>
                   </div>
