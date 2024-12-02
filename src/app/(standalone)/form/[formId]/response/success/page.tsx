@@ -8,7 +8,7 @@ type Props = {
 
 export default function Page({ params: { formId } }: Readonly<Props>) {
    return (
-      <div className="flex h-screen items-center justify-center px-4 md:px-6">
+      <div className="flex h-screen items-center justify-center bg-slate-50 px-4 md:px-6">
          <Card>
             <CardHeader></CardHeader>
             <CardContent className="grid gap-4">

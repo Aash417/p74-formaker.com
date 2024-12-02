@@ -19,10 +19,10 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
       return (
          <div className="h-screen bg-slate-50">
             <div className="flex justify-center bg-slate-50 p-4">
-               <Card>
+               <Card className="w-full max-w-2xl">
                   <CardHeader></CardHeader>
                   <CardContent>
-                     <div className="w-[550px] space-y-6">
+                     <div className="space-y-6">
                         <SubmitResponseForm
                            data={{ ...data }}
                            formId={formId}

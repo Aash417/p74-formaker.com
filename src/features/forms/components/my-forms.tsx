@@ -26,10 +26,12 @@ export default function MyForms() {
       return (
          <Card>
             <CardHeader>
-               <div className="flex justify-center">No forms yet</div>
+               <div className="flex justify-center text-center">
+                  No forms yet
+               </div>
             </CardHeader>
             <CardContent>
-               <div className="flex justify-center text-muted-foreground">
+               <div className="flex justify-center text-center text-muted-foreground">
                   Select a blank form to get started
                </div>
             </CardContent>
@@ -37,7 +39,7 @@ export default function MyForms() {
       );
 
    return (
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
          {data?.map((el) => {
             const words = el.title.split(' ');
             const limitedWords =

@@ -21,14 +21,16 @@ export default function DataForm({ formData }: Readonly<Props>) {
    if (!formData) return <div>...</div>;
 
    return (
-      <div className="flex h-full justify-center">
-         <Card>
+      <div className="flex h-full justify-center p-4">
+         <Card className="w-full max-w-2xl">
             <CardHeader></CardHeader>
             <CardContent>
-               <div className="w-[550px] space-y-6">
-                  <div className="flex flex-col gap-x-3">
-                     <p className="text-3xl font-bold">{formData.title}</p>
-                     <p className="text-xl text-muted-foreground">
+               <div className="space-y-6">
+                  <div className="flex flex-col gap-y-2">
+                     <p className="text-center text-2xl font-bold sm:text-left">
+                        {formData.title}
+                     </p>
+                     <p className="text-center text-base text-muted-foreground sm:text-left">
                         {formData.description}
                      </p>
                   </div>

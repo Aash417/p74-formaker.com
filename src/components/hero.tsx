@@ -47,7 +47,7 @@ export default function Hero() {
                   <div className="text-center md:px-16 lg:px-0 lg:text-left xl:col-span-2">
                      <div className="mx-auto max-w-sm sm:max-w-md md:max-w-full">
                         <h1 className="font-pj text-4xl font-bold leading-tight text-gray-900 sm:text-5xl sm:leading-tight lg:text-6xl lg:leading-tight">
-                           EASIEST ONLINE FORM BUILDER
+                           Easiest Online Form Builder
                         </h1>
 
                         <div className="mt-8 lg:mt-12 lg:flex lg:items-center">
@@ -78,7 +78,7 @@ export default function Hero() {
 
                      <div className="mt-8 sm:flex sm:items-center sm:justify-center sm:space-x-5 lg:mt-12 lg:justify-start">
                         <a
-                           href="/dashboard"
+                           href="/auth/sign-in"
                            title=""
                            className="font-pj inline-flex items-center justify-center rounded-xl border border-transparent bg-gray-900 px-8 py-4 text-lg font-bold text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                            role="button"

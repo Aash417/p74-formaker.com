@@ -72,7 +72,7 @@ export default function DataResponses({ data }: any) {
 
    return (
       <div className="w-full">
-         <div className="flex items-center justify-between py-4">
+         <div className="flex items-center justify-between gap-2 py-4">
             <Input
                placeholder="Filter emails..."
                value={
@@ -88,7 +88,7 @@ export default function DataResponses({ data }: any) {
                className="max-w-sm"
             />
 
-            <div className="flex gap-x-3">
+            <div className="flex gap-2">
                <ExportToExcel apiData={data} fileName="Responses" />
 
                <DropdownMenu>

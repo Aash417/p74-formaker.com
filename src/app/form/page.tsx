@@ -8,10 +8,10 @@ export default function Page() {
          <Navbar />
          <div className="h-screen bg-slate-50">
             <div className="flex justify-center bg-slate-50 p-4">
-               <Card>
+               <Card className="w-full max-w-3xl">
                   <CardHeader></CardHeader>
                   <CardContent>
-                     <div className="w-[550px] space-y-6">
+                     <div className="space-y-6">
                         <CreateDynamicForm />
                      </div>
                   </CardContent>

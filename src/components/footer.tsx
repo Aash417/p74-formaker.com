@@ -6,7 +6,7 @@ export default function Footer() {
    return (
       <section className="bg-gray-50 py-10 sm:pt-16">
          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-4">
                <div className="flex items-center gap-2">
                   <Image
                      src="/logo.svg"
@@ -31,7 +31,7 @@ export default function Footer() {
 
                   <li>
                      <Link
-                        href="https://github.com/Aash417"
+                        href="https://github.com/Aash417/p74-formaker.com"
                         className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600"
                      >
                         <FaGithub className="size-4" />

@@ -9,8 +9,8 @@ type Props = {
 export default function Layout({ children }: Readonly<Props>) {
    return (
       <div>
-         <div className="flex items-center justify-between border-b p-2 pl-5 pr-5">
-            <div className="relative flex flex-row items-center gap-1 text-lg font-semibold">
+         <div className="flex items-center justify-between border-b p-2 px-5">
+            <div className="relative flex flex-row items-center gap-2 text-lg font-semibold">
                <Image
                   src="/logo.svg"
                   alt="logo"
@@ -20,7 +20,7 @@ export default function Layout({ children }: Readonly<Props>) {
                />
             </div>
 
-            <Button variant="link" asChild>
+            <Button variant="link" asChild className="text-center">
                <Link href="/">Create your own forms</Link>
             </Button>
          </div>
