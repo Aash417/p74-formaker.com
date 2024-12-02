@@ -61,7 +61,7 @@ export const formRoute = new Hono()
          data: result,
       });
    })
-   .delete('/:formId', sessionMiddleware, async (c) => {
+   .delete('/:formId', async (c) => {
       const { formId } = c.req.param();
 
       const result = await db.form.delete({
@@ -102,7 +102,7 @@ export const formRoute = new Hono()
          });
       },
    )
-   .get('/:formId/responses', sessionMiddleware, async (c) => {
+   .get('/:formId/responses', async (c) => {
       const { formId } = c.req.param();
 
       const questions = await db.form.findFirst({

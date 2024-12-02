@@ -16,6 +16,7 @@ export const isPublicRoute = (pathname: string) => {
    // Match dynamic public routes
    const dynamicPublicRoutes = [
       /^\/form\/[^/]+\/response$/, // Match /form/:formId/response
+      /^\/form\/[^/]+\/response\/success$/, // Match /form/:formId/response/success
       /^\/api\/hono\/forms\/[^/]+\/responses$/, // Match /api/hono/forms/:formId/responses
       /^\/api\/hono\/forms\/[^/]+$/, // Match /api/hono/forms/:formId
    ];
