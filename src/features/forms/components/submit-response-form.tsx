@@ -49,10 +49,10 @@ export default function SubmitResponseForm({ formId, data }: Readonly<Props>) {
       <>
          <div className="flex flex-col gap-y-2">
             <p className="text-center text-2xl font-bold sm:text-left">
-               {data.title}
+               {title}
             </p>
             <p className="text-center text-base text-muted-foreground sm:text-left">
-               {data.description}
+               {description}
             </p>
          </div>
 
