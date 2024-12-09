@@ -231,7 +231,7 @@ export default function CreateDynamicForm() {
             </Button>
 
             <Button type="submit" disabled={isPending}>
-               Submit
+               Create
             </Button>
          </div>
       </form>

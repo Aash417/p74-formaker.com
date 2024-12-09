@@ -72,7 +72,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
                <div className="flex gap-x-3">
                   <Dialog>
                      <DialogTrigger asChild>
-                        <Button variant="outline">Send</Button>
+                        <Button variant="outline">Share</Button>
                      </DialogTrigger>
 
                      <DialogContent className="sm:max-w-md">
@@ -157,7 +157,7 @@ export default function Page({ params: { formId } }: Readonly<Props>) {
             <TabsContent value="responses" className="mt-0">
                {responses?.length === 0 ? (
                   <div className="h-screen bg-slate-50 pb-2">
-                     <div className="p-[150px]">
+                     <div className="sm:p-[150px]">
                         <Card>
                            <CardHeader>
                               <p className="flex justify-center font-semibold">
